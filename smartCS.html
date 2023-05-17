@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="https://kit.fontawesome.com/d8bd919f93.js" crossorigin="anonymous"></script>
+<style>
+.open-button {
+  padding:10px 40px;
+  background-color: #04AA6D;
+  color: white;
+  font-size:18px;
+  max-width:300px;
+  border-radius:20px;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;  
+}
+
+.chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  z-index: 9;
+ 
+}
+
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  border-radius:20px;
+  background-color: white;
+  color:#777;
+}
+
+.form-container textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  border-radius:20px;
+  background: #ddd;
+  resize: none;
+  min-height: 200px;
+  color:#777;
+}
+
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+   font-size:17px;
+  padding: 10px 20px;
+  border: none;
+  border-radius:20px;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+}
+
+.form-container .cancel {
+  background-color: #1974D2;
+}
+
+.form-container .btn:hover, .open-button:hover {
+opacity: 0.8;
+}
+</style>
+
+
+<script>
+  function openForm() {
+    document.getElementById("conversation").style.display = "block";
+  }
+  
+  function closeForm() {
+    document.getElementById("conversation").style.display = "none";
+  }
+</script>
+<button class="open-button"onclick="openForm()">智慧客服</button>
+
+<div class="chat-popup"  id="conversation">
+  <form class="form-container">
+   <i class="fa-solid fa-chalkboard-user"></i> <h3>智慧客服</h3>
+
+    <label for="msg">E-Bank</label>
+    <textarea placeholder="請輸入您的問題" name="msg" id="tta" required></textarea>
+
+    <button type="submit" class="btn">發送</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">關閉</button>
+  </form>
+  <script>
+    document.getElementById("btn").addEventListener('click', () => {
+     document.getElementById("tta").innerHTML += '  Appended text';
+    });
+   </script>
+  <script>
+    $('form').submit((event) => {
+      event.preventDefault();
+      const message = $('#message').val();
+      $('textarea').append(`<p>您: ${message}</p>`);
+      $.post('/chat', { message }, (response) => {
+        $('#conversation').append(`<p>E-Bank 客服小天使: ${response}</p>`);
+      });
+      $('#message').val('');
+    });
+  </script>
+</div>
